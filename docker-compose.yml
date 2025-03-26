@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    image: sharath198/flights-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/curd
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src/main/resources/flights.csv:/app/resources/flights.csv  # Mount flights.csv inside the container
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: curd
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  mysql-data:
