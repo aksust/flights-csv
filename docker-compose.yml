@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: sharath198/flights-app
+    image: aksust/springboot-app-flights-csv
     build:
       context: .
       dockerfile: Dockerfile
