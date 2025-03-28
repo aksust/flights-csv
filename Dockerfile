@@ -14,5 +14,5 @@ ADD target/flights.jar flights.jar
 COPY src/main/resources/flights.csv /app/resources/flights.csv
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "/flights.jar"]
+ENTRYPOINT ["java", "-jar", "flights.jar"]
 
